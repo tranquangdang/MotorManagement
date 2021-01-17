@@ -23,7 +23,7 @@ create table tblOrderInvoice
 	OrderDate datetime,
 	CustName nvarchar(50),
 	TelNo char(10),
-	IDC nchar(20),
+	IDC nchar(9),
 	Address nvarchar(100),
 	TotalMoney money default 0,
 )
@@ -31,8 +31,8 @@ go
 
 create table tblOrderInvoiceDetail
 (
-	OrderID char(5) foreign key references tblOrderInvoice(OrderID),
-	ProductID char(5) foreign key references tblMotor(ProductID),
+	OrderID char(5) foreign key references tblOrderInvoice(OrderID) ON DELETE CASCADE ,
+	ProductID char(5) foreign key references tblMotor(ProductID) ON DELETE CASCADE ,
 	primary key (OrderID, ProductID),
 	QtyOrdered int,
 	Amount money,
@@ -44,7 +44,6 @@ on tblOrderInvoiceDetail
 after insert
 as
 begin
-	declare @counter int, @i money
 	--a. Tăng/giảm số lượng ở bảng tblMotor
 	update tblMotor
 	set Quantity = Quantity - i.QtyOrdered
@@ -119,15 +118,15 @@ values	('M0001', N'SH 300CC', N'Honda', N'Xe tay ga', 279, 270500000, 100),
 go
 
 insert into tblOrderInvoice
-values	('O0001', N'09/07/2020 07:13:50', N'Lâm Văn Hùng', '0905267382', '201748373', N'09 Lê Quang Sung, TP Tam Kỳ, tỉnh Quảng Nam', default),
-		('O0002', N'14/07/2020 12:03:50', N'Nguyễn Hồng An', '0326783459', '201819371', N'140 Lê Đình Dương, quận Hải Châu, Hải Châu, Đà Nẵng', default),
-		('O0003', N'15/07/2020 09:23:55', N'Đỗ Mai Chi', '0905749372', '139472819', N'58 Hoàng Diệu, TT. Vĩnh Điện, Điện Bàn, Quảng Nam', default),
-		('O0004', N'21/07/2020 15:34:53', N'Trần Công Chí', '0937465833', '108374859', N'53 Lý Thái Tông, Thanh Khê Tây, Thanh Khê, Đà Nẵng, Việt Nam', default),
-		('O0005', N'29/07/2020 20:08:15', N'Võ Sĩ Hùng', '0351758927', '1183989812', N'5 Nguyễn Tri Phương, Thạc Gián, Thanh Khê, Đà Nẵng', default),
-		('O0006', N'02/08/2020 15:14:23', N'Châu Minh Thảo', '0873864834', '201839382', N'82 Trần Quốc Toản, quận Hải Châu, Đà Nẵng', default),
-		('O0007', N'13/08/2020 19:25:35', N'Bùi Trúc Linh', '0905847591', '11721089912', N'96 Tân Thới Hiệp 13, Quận 12, Hồ Chí Minh', default),
-		('O0008', N'24/08/2020 10:35:03', N'Trương Ngọc Nga', '0968428418', '101921324', N'Ngõ 268 Đê la Thành, Thổ Quan, Đống Đa, Hà Nội', default),
-		('O0009', N'25/08/2020 16:28:37', N'Nguyễn Đình Long', '0321847372', '123128772', N'136 Nguyễn An Ninh, Đồng Tâm, Hai Bà Trưng, Hà Nội', default)
+values	('O0001', N'25/12/2020 07:13:50', N'Lâm Văn Hùng', '0905267382', '201748373', N'09 Lê Quang Sung, TP Tam Kỳ, tỉnh Quảng Nam', default),
+		('O0002', N'26/12/2020 12:03:50', N'Nguyễn Hồng An', '0326783459', '201819371', N'140 Lê Đình Dương, quận Hải Châu, Hải Châu, Đà Nẵng', default),
+		('O0003', N'31/12/2020 09:23:55', N'Đỗ Mai Chi', '0905749372', '139472819', N'58 Hoàng Diệu, TT. Vĩnh Điện, Điện Bàn, Quảng Nam', default),
+		('O0004', N'15/01/2021 15:34:53', N'Trần Công Chí', '0937465833', '108374859', N'53 Lý Thái Tông, Thanh Khê Tây, Thanh Khê, Đà Nẵng, Việt Nam', default),
+		('O0005', N'16/01/2021 20:08:15', N'Võ Sĩ Hùng', '0351758927', '118398981', N'5 Nguyễn Tri Phương, Thạc Gián, Thanh Khê, Đà Nẵng', default),
+		('O0006', N'17/01/2021 15:14:23', N'Châu Minh Thảo', '0873864834', '201839382', N'82 Trần Quốc Toản, quận Hải Châu, Đà Nẵng', default),
+		('O0007', N'21/01/2021 19:25:35', N'Bùi Trúc Linh', '0905847591', '117210899', N'96 Tân Thới Hiệp 13, Quận 12, Hồ Chí Minh', default),
+		('O0008', N'21/01/2021 10:35:03', N'Trương Ngọc Nga', '0968428418', '101921324', N'Ngõ 268 Đê la Thành, Thổ Quan, Đống Đa, Hà Nội', default),
+		('O0009', N'27/01/2021 16:28:37', N'Nguyễn Đình Long', '0321847372', '123128772', N'136 Nguyễn An Ninh, Đồng Tâm, Hai Bà Trưng, Hà Nội', default)
 go
 
 insert into tblOrderInvoiceDetail
@@ -149,11 +148,5 @@ values	('O0001','M0001', 3, null),
 		('O0008','M0005', 1, null),
 		('O0009','M0018', 6, null)
 go
---select * from tblOrderInvoice
-select m.ProductID, Model, Price, QtyOrdered, Amount from tblOrderInvoiceDetail as o, tblMotor as m, tblOrderInvoice as oi  
-where oi.OrderID = 'O0001' and o.ProductID = m.ProductID and o.OrderID = oi.OrderID
 
-select * from tblOrderInvoice as oi where OrderID = 'O0001'
-select * from tblOrderInvoiceDetail
---select Amount from tblOrderInvoiceDetail as oi where ProductID = 'M0011' and oi.OrderID = 'O0004'
-delete from tblOrderInvoiceDetail where OrderID = 'O0004' and ProductID = 'M0007'
+select * from tblOrderInvoice

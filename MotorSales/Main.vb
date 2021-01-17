@@ -10,6 +10,8 @@ Public Class Main
     Dim selTblOrderInvoice = "select * from tblOrderInvoice"
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
+        Me.MaximizeBox = False
         pnMotor.Visible = False
         pnCreateInvoice.Visible = False
         tsmiInvoice_Click(sender, e)
@@ -26,6 +28,7 @@ Public Class Main
         DTMotor.Load(DR, LoadOption.OverwriteChanges)
         conn.Close()
         DataGridViewMotor.DataSource = DTMotor
+        DataGridViewMotor.Columns(5).DefaultCellStyle.Format = "N0"
         boundMotor = Me.BindingContext(DTMotor)
     End Sub
 
@@ -39,6 +42,7 @@ Public Class Main
         DTOrderInvoice.Load(DR, LoadOption.OverwriteChanges)
         conn.Close()
         DataGridViewOI.DataSource = DTOrderInvoice
+        DataGridViewOI.Columns(6).DefaultCellStyle.Format = "N0"
         boundOI = Me.BindingContext(DTOrderInvoice)
     End Sub
 
@@ -118,7 +122,7 @@ Public Class Main
                 MessageBox.Show("Chưa chọn trường cần xóa!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         Catch ex As Exception
-            MessageBox.Show("Lỗi!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(ex, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error)
             btnReset_Click(sender, e)
         End Try
     End Sub
@@ -326,14 +330,14 @@ Public Class Main
             DR.Read()
             it.SubItems.Add(DR.Item("ProductID"))
             it.SubItems.Add(DR.Item("Model"))
-            it.SubItems.Add(DR.Item("Price"))
+            it.SubItems.Add(String.Format("{0:#,##0}", Convert.ToDecimal(DR.Item("Price"))))
             it.SubItems.Add(1)
-            it.SubItems.Add(DR.Item("Price"))
+            it.SubItems.Add(String.Format("{0:#,##0}", Convert.ToDecimal(DR.Item("Price"))))
             conn.Close()
             txtSearch.Text = ""
             lstSearch.Items.Clear()
             lstSearch.Visible = False
-            lblTotalMoney.Text = GetSubTotal()
+            lblTotalMoney.Text = String.Format("{0:#,##0}", Convert.ToDecimal(GetSubTotal()))
         End If
         txtSearch.Text = "(Tìm kiếm)"
     End Sub
@@ -342,8 +346,9 @@ Public Class Main
         For Each item In lvCreateInvoice.SelectedItems
             item.subitems(4).text = nud.Value
             item.subitems(5).text = item.subitems(3).text * nud.Value
+            item.subitems(5).text = String.Format("{0:#,##0}", Convert.ToDecimal(item.subitems(5).text))
         Next
-        lblTotalMoney.Text = GetSubTotal()
+        lblTotalMoney.Text = String.Format("{0:#,##0}", Convert.ToDecimal(GetSubTotal()))
     End Sub
 
     Private Sub nud_Click(sender As Object, e As EventArgs) Handles nud.Click
@@ -670,6 +675,60 @@ Public Class Main
 
     Private Sub btnPrintInvoice_Click(sender As Object, e As EventArgs) Handles btnPrintInvoice.Click
         Invoice.ShowDialog()
+    End Sub
+
+    Private Sub XMLToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles XMLToolStripMenuItem.Click
+        Dim db As New MotorDataContext
+        Dim export As New XDocument(
+        New XElement(
+            "tblMotor",
+                New XComment("Danh sách"),
+                From motor In db.tblMotors Select motor
+                Select New XElement(
+                    "Motor",
+                        New XElement("Brand", New XText(motor.Brand)),
+                        New XElement("Model", New XText(motor.Model)),
+                        New XElement("Category", New XText(motor.Category)),
+                        New XElement("CylinderCapacity", New XText(String.Format("{0:#,##0.00}", Convert.ToDecimal(motor.CylinderCapacity)))),
+                        New XElement("Price", New XText(String.Format("{0:#,##0}", Convert.ToDecimal(motor.Price)))),
+                        New XElement("Quantity", New XText(String.Format("{0:#,##0}", Convert.ToDecimal(motor.Quantity))))
+                    )
+                )
+            )
+        export.Save("D:\\tblMotor.xml")
+    End Sub
+
+    Private Sub btnOItoXML_Click(sender As Object, e As EventArgs) Handles btnOItoXML.Click
+        Dim db As New MotorDataContext
+        Dim export As New XDocument(
+        New XElement(
+            "OrderInvoice",
+                New XComment("Hóa đơn"),
+                From invoice In db.tblOrderInvoices Select invoice
+                Select New XElement(
+                    "Invoice",
+                        New XElement("OrderID", New XText(invoice.OrderID)),
+                        New XElement("OrderDate", New XText(String.Format("{0:g}", Convert.ToDateTime(invoice.OrderDate)))),
+                        New XElement("CustName", New XText(invoice.CustName)),
+                        New XElement("TelNo", New XText(invoice.TelNo)),
+                        New XElement("IDC", New XText(invoice.IDC)),
+                        New XElement("Address", New XText(invoice.Address)),
+                        New XElement(
+                            "Details",
+                                New XComment("Chi tiết"),
+                                From details In db.tblOrderInvoiceDetails Select details
+                                Select New XElement(
+                                    "OrderDetails",
+                                        New XElement("OrderID", New XText(details.ProductID)),
+                                        New XElement("OrderID", New XText(details.QtyOrdered)),
+                                        New XElement("OrderDate", New XText(String.Format("{0:#,##0}", Convert.ToDecimal(details.Amount))))
+                                )
+                        ),
+                        New XElement("TotalMoney", New XText(String.Format("{0:#,##0}", Convert.ToDecimal(invoice.TotalMoney))))
+                    )
+                )
+        )
+        export.Save("D:\\tblInvoice.xml")
     End Sub
 
 
