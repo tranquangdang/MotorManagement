@@ -54,6 +54,7 @@ Public Class Main
         cboCategory.Text = boundMotor.Current("Category")
         txtCylCap.Text = boundMotor.Current("CylinderCapacity")
         txtPrice.Text = boundMotor.Current("Price")
+        txtPrice.Text = String.Format("{0:#}", Convert.ToDecimal(txtPrice.Text))
         txtQty.Text = boundMotor.Current("Quantity")
     End Sub
 
@@ -83,6 +84,7 @@ Public Class Main
         End If
     End Function
 
+    'Thêm xe
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         Try
             If CheckEmpty() = True Then
@@ -103,6 +105,7 @@ Public Class Main
         End Try
     End Sub
 
+    'Xóa xe
     Private Sub btnDel_Click(sender As Object, e As EventArgs) Handles btnDel.Click
         Try
             If txtProductID.Text <> "" Then
@@ -127,6 +130,7 @@ Public Class Main
         End Try
     End Sub
 
+    'Sửa thông tin xe
     Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
         Try
             If CheckEmpty() Then
@@ -151,18 +155,22 @@ Public Class Main
         End Try
     End Sub
 
+    'Về đầu
     Private Sub btnFirst_Click(sender As Object, e As EventArgs) Handles btnFirst.Click
         boundMotor.Position = 0
     End Sub
 
+    'Tiếp theo
     Private Sub btnNext_Click(sender As Object, e As EventArgs) Handles btnNext.Click
         boundMotor.Position += 1
     End Sub
 
+    'Quay lại
     Private Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
         boundMotor.Position -= 1
     End Sub
 
+    'Cuối cùng
     Private Sub btnLast_Click(sender As Object, e As EventArgs) Handles btnLast.Click
         boundMotor.Position = boundMotor.Count - 1
     End Sub
@@ -202,6 +210,7 @@ Public Class Main
     End Sub
 
     Private Sub tsmiInvoice_Click(sender As Object, e As EventArgs) Handles tsmiInvoice.Click
+        DataGridViewOI.ReadOnly = True
         DataGridViewOI.AllowUserToAddRows = False
         DataGridViewOI.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         DataGridViewOI.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
@@ -244,6 +253,7 @@ Public Class Main
         pnCreateInvoice.Visible = False
         pnInvoiceDetail.Visible = False
         pnMotor.Visible = True
+        DataGridViewMotor.ReadOnly = True
         DataGridViewMotor.AllowUserToAddRows = False
         DataGridViewMotor.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill 'Chỉnh độ rộng cột
         DataGridViewMotor.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells 'Chỉnh độ rộng hàng
@@ -309,12 +319,13 @@ Public Class Main
                 If item.SubItems(2).text = lstSearch.GetItemText(lstSearch.SelectedItem) Then
                     item.subitems(4).text += 1
                     item.subitems(5).text = item.subitems(3).text * item.subitems(4).text
+                    item.subitems(5).text = String.Format("{0:#,##0}", Convert.ToDecimal(item.subitems(5).text))
                 End If
             Next
             txtSearch.Text = ""
             lstSearch.Items.Clear()
             lstSearch.Visible = False
-            lblTotalMoney.Text = GetSubTotal()
+            lblTotalMoney.Text = String.Format("{0:#,##0}", Convert.ToDecimal(GetSubTotal()))
         Else
             Dim it As ListViewItem
             Dim stt As Integer
@@ -369,7 +380,7 @@ Public Class Main
         For Each item In l
             item.Remove()
         Next
-        lblTotalMoney.Text = GetSubTotal()
+        lblTotalMoney.Text = String.Format("{0:#,##0}", Convert.ToDecimal(GetSubTotal()))
         nud.Value = 1
         For Each item In lvCreateInvoice.Items
             stt += 1
@@ -681,7 +692,7 @@ Public Class Main
         Dim db As New MotorDataContext
         Dim export As New XDocument(
         New XElement(
-            "tblMotor",
+            "Motors",
                 New XComment("Danh sách"),
                 From motor In db.tblMotors Select motor
                 Select New XElement(
@@ -695,16 +706,16 @@ Public Class Main
                     )
                 )
             )
-        export.Save("D:\\tblMotor.xml")
+        export.Save("D:\\Motor.xml")
     End Sub
 
     Private Sub btnOItoXML_Click(sender As Object, e As EventArgs) Handles btnOItoXML.Click
         Dim db As New MotorDataContext
         Dim export As New XDocument(
         New XElement(
-            "OrderInvoice",
+            "OrderInvoices",
                 New XComment("Hóa đơn"),
-                From invoice In db.tblOrderInvoices Select invoice
+                From invoice In db.tblOrderInvoices Select invoice Where invoice.TotalMoney <> vbNull
                 Select New XElement(
                     "Invoice",
                         New XElement("OrderID", New XText(invoice.OrderID)),
@@ -714,34 +725,25 @@ Public Class Main
                         New XElement("IDC", New XText(invoice.IDC)),
                         New XElement("Address", New XText(invoice.Address)),
                         New XElement(
-                            "Details",
+                            "OrderDetails",
                                 New XComment("Chi tiết"),
                                 From details In db.tblOrderInvoiceDetails Select details
                                 Select New XElement(
-                                    "OrderDetails",
-                                        New XElement("OrderID", New XText(details.ProductID)),
-                                        New XElement("OrderID", New XText(details.QtyOrdered)),
-                                        New XElement("OrderDate", New XText(String.Format("{0:#,##0}", Convert.ToDecimal(details.Amount))))
+                                    "Detail",
+                                        New XElement("ProductID", New XText(details.ProductID)),
+                                        New XElement("QtyOrderd", New XText(details.QtyOrdered)),
+                                        New XElement("Amount", New XText(String.Format("{0:#,##0}", Convert.ToDecimal(details.Amount))))
                                 )
                         ),
                         New XElement("TotalMoney", New XText(String.Format("{0:#,##0}", Convert.ToDecimal(invoice.TotalMoney))))
                     )
                 )
         )
-        export.Save("D:\\tblInvoice.xml")
+        export.Save("D:\\Invoice.xml")
     End Sub
 
 
     'Ràng buộc nud luôn nhỏ hơn số xe trong tblMotor
     'Hiển thị số lượng xe còn góc trái khi selected
     'Số lượng xe không âm và khi mua hết xe tự động chuyển qua bảng khác, xóa hóa đơn thì tự động chuyển lại
-
-    'cmd = "select dbo.fnOrderInvoice('" & OrderID & "')"
-    'Dim fnOrderInvoice As New SqlCommand(cmd, conn)
-    'conn.Open()
-    'Dim readTotal As SqlDataReader = Command.ExecuteReader()
-    'DR.Read()
-    'total = DR.Item(1)
-    'MsgBox(total)
-    'conn.Close()
 End Class

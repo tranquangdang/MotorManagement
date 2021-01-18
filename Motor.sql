@@ -148,5 +148,3 @@ values	('O0001','M0001', 3, null),
 		('O0008','M0005', 1, null),
 		('O0009','M0018', 6, null)
 go
-
-select * from tblOrderInvoice
