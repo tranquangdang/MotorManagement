@@ -733,9 +733,4 @@ Public Class Main
         )
         export.Save("D:\\Invoice.xml")
     End Sub
-
-
-    'Ràng buộc nud luôn nhỏ hơn số xe trong tblMotor
-    'Hiển thị số lượng xe còn góc trái khi selected
-    'Số lượng xe không âm và khi mua hết xe tự động chuyển qua bảng khác, xóa hóa đơn thì tự động chuyển lại
 End Class
