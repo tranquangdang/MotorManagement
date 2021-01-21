@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Motor">
+  <DataContextMoniker Name="/MotorDataContext" />
+  <nestedChildShapes>
+    <classShape Id="a9491c9f-2215-47a6-9e6d-6712fd66cbe2" absoluteBounds="0.875, 5.375, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/MotorDataContext/tblMotor" />
+      <nestedChildShapes>
+        <elementListCompartment Id="14f0d0e9-4932-443b-9213-41046d800adc" absoluteBounds="0.89000000000000012, 5.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c0ab9fbf-0469-4c8d-b4a5-c4c8b8b5a036" absoluteBounds="1.125, 1.375, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/MotorDataContext/tblOrderInvoice" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b4aefd38-5162-4411-9077-5ff7425b86b5" absoluteBounds="1.1400000000000001, 1.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="04327556-be76-4142-a341-8a29fdd64aed" absoluteBounds="3.875, 3.25, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/MotorDataContext/tblOrderInvoiceDetail" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e04bbb3a-e35d-4470-96d1-8c0c02180098" absoluteBounds="3.8900000000000006, 3.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.125 : 2.3124995); (4.875 : 2.3124995); (4.875 : 3.25)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MotorDataContext/tblOrderInvoice/tblOrderInvoice_tblOrderInvoiceDetail" />
+      <nodes>
+        <classShapeMoniker Id="c0ab9fbf-0469-4c8d-b4a5-c4c8b8b5a036" />
+        <classShapeMoniker Id="04327556-be76-4142-a341-8a29fdd64aed" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.875 : 6.45274983723958); (4.875 : 6.45274983723958); (4.875 : 4.82859537760417)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MotorDataContext/tblMotor/tblMotor_tblOrderInvoiceDetail" />
+      <nodes>
+        <classShapeMoniker Id="a9491c9f-2215-47a6-9e6d-6712fd66cbe2" />
+        <classShapeMoniker Id="04327556-be76-4142-a341-8a29fdd64aed" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

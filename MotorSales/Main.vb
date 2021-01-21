@@ -262,10 +262,6 @@ Public Class Main
         Selected_Row_TblMotor(sender, e)
     End Sub
 
-    Private Sub tsmiInventory_Click(sender As Object, e As EventArgs) Handles tsmiInventory.Click
-        rpMotor.ShowDialog()
-    End Sub
-
     Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
         If txtSearch.Text <> "" Then
             cmd = "select Model from tblMotor where Model like N'%" & txtSearch.Text & "%'
@@ -682,10 +678,6 @@ Public Class Main
         txtSearchBy.Visible = True
         lblNum.Visible = False
         lblNumText.Visible = False
-    End Sub
-
-    Private Sub btnPrintInvoice_Click(sender As Object, e As EventArgs) Handles btnPrintInvoice.Click
-        Invoice.ShowDialog()
     End Sub
 
     Private Sub XMLToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles XMLToolStripMenuItem.Click

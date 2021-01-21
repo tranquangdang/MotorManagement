@@ -23,12 +23,16 @@ Partial Class Main
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ms = New System.Windows.Forms.MenuStrip()
+        Me.tsmiInvoice = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsmiCreateInvoice = New System.Windows.Forms.ToolStripMenuItem()
         Me.border1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsmiMotor = New System.Windows.Forms.ToolStripMenuItem()
+        Me.XMLToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.lblProductID = New System.Windows.Forms.Label()
         Me.lblModel = New System.Windows.Forms.Label()
@@ -46,6 +50,7 @@ Partial Class Main
         Me.btnLast = New System.Windows.Forms.Button()
         Me.DataGridViewMotor = New System.Windows.Forms.DataGridView()
         Me.btnReset = New System.Windows.Forms.Button()
+        Me.btnSearch = New System.Windows.Forms.Button()
         Me.btnDel = New System.Windows.Forms.Button()
         Me.btnUpdate = New System.Windows.Forms.Button()
         Me.btnAdd = New System.Windows.Forms.Button()
@@ -77,7 +82,7 @@ Partial Class Main
         Me.lblCustName = New System.Windows.Forms.Label()
         Me.lblTitle = New System.Windows.Forms.Label()
         Me.pnInvoiceDetail = New System.Windows.Forms.Panel()
-        Me.btnPrintInvoice = New System.Windows.Forms.Button()
+        Me.btnOItoXML = New System.Windows.Forms.Button()
         Me.btnRs = New System.Windows.Forms.Button()
         Me.gbSearch = New System.Windows.Forms.GroupBox()
         Me.lstSearchBy = New System.Windows.Forms.ListBox()
@@ -87,6 +92,7 @@ Partial Class Main
         Me.cbModel = New System.Windows.Forms.CheckBox()
         Me.cbCustName = New System.Windows.Forms.CheckBox()
         Me.btnSearchBy = New System.Windows.Forms.Button()
+        Me.pbSearch = New System.Windows.Forms.PictureBox()
         Me.cbOrderID = New System.Windows.Forms.CheckBox()
         Me.txtSearchBy = New System.Windows.Forms.TextBox()
         Me.cbOrderDate = New System.Windows.Forms.CheckBox()
@@ -97,14 +103,6 @@ Partial Class Main
         Me.Timer = New System.Windows.Forms.Timer(Me.components)
         Me.lblDate = New System.Windows.Forms.Label()
         Me.Clock = New System.Windows.Forms.PictureBox()
-        Me.pbSearch = New System.Windows.Forms.PictureBox()
-        Me.btnSearch = New System.Windows.Forms.Button()
-        Me.tsmiInvoice = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tsmiCreateInvoice = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tsmiMotor = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tsmiInventory = New System.Windows.Forms.ToolStripMenuItem()
-        Me.XMLToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.btnOItoXML = New System.Windows.Forms.Button()
         Me.ms.SuspendLayout()
         Me.pnMotor.SuspendLayout()
         CType(Me.DataGridViewMotor, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -112,9 +110,9 @@ Partial Class Main
         CType(Me.nud, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnInvoiceDetail.SuspendLayout()
         Me.gbSearch.SuspendLayout()
+        CType(Me.pbSearch, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridViewOI, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Clock, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbSearch, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ms
@@ -129,6 +127,22 @@ Partial Class Main
         Me.ms.TabIndex = 0
         Me.ms.Text = "MenuStrip"
         '
+        'tsmiInvoice
+        '
+        Me.tsmiInvoice.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmiCreateInvoice})
+        Me.tsmiInvoice.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tsmiInvoice.Image = Global.MotorSales.My.Resources.Resources.sale
+        Me.tsmiInvoice.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.tsmiInvoice.Name = "tsmiInvoice"
+        Me.tsmiInvoice.Size = New System.Drawing.Size(151, 32)
+        Me.tsmiInvoice.Text = "ĐƠN HÀNG"
+        '
+        'tsmiCreateInvoice
+        '
+        Me.tsmiCreateInvoice.Name = "tsmiCreateInvoice"
+        Me.tsmiCreateInvoice.Size = New System.Drawing.Size(169, 32)
+        Me.tsmiCreateInvoice.Text = "Tạo mới"
+        '
         'border1
         '
         Me.border1.Enabled = False
@@ -137,6 +151,21 @@ Partial Class Main
         Me.border1.ShowShortcutKeys = False
         Me.border1.Size = New System.Drawing.Size(26, 32)
         Me.border1.Text = "|"
+        '
+        'tsmiMotor
+        '
+        Me.tsmiMotor.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XMLToolStripMenuItem})
+        Me.tsmiMotor.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tsmiMotor.Image = Global.MotorSales.My.Resources.Resources.Xe
+        Me.tsmiMotor.Name = "tsmiMotor"
+        Me.tsmiMotor.Size = New System.Drawing.Size(68, 32)
+        Me.tsmiMotor.Text = "XE"
+        '
+        'XMLToolStripMenuItem
+        '
+        Me.XMLToolStripMenuItem.Name = "XMLToolStripMenuItem"
+        Me.XMLToolStripMenuItem.Size = New System.Drawing.Size(224, 32)
+        Me.XMLToolStripMenuItem.Text = "XML"
         '
         'ToolStripMenuItem1
         '
@@ -326,33 +355,33 @@ Partial Class Main
         '
         'DataGridViewMotor
         '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridViewMotor.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewMotor.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.DataGridViewMotor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.DodgerBlue
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataGridViewMotor.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.DodgerBlue
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridViewMotor.DefaultCellStyle = DataGridViewCellStyle2
         Me.DataGridViewMotor.Location = New System.Drawing.Point(17, 281)
         Me.DataGridViewMotor.Name = "DataGridViewMotor"
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridViewMotor.RowHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewMotor.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.DataGridViewMotor.RowHeadersWidth = 51
         Me.DataGridViewMotor.RowTemplate.Height = 24
         Me.DataGridViewMotor.Size = New System.Drawing.Size(993, 307)
@@ -370,6 +399,18 @@ Partial Class Main
         Me.btnReset.TabIndex = 17
         Me.btnReset.Text = "Reset"
         Me.btnReset.UseVisualStyleBackColor = False
+        '
+        'btnSearch
+        '
+        Me.btnSearch.BackColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.btnSearch.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnSearch.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSearch.Image = Global.MotorSales.My.Resources.Resources.search
+        Me.btnSearch.Location = New System.Drawing.Point(931, 59)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(67, 32)
+        Me.btnSearch.TabIndex = 16
+        Me.btnSearch.UseVisualStyleBackColor = False
         '
         'btnDel
         '
@@ -689,7 +730,6 @@ Partial Class Main
         'pnInvoiceDetail
         '
         Me.pnInvoiceDetail.Controls.Add(Me.btnOItoXML)
-        Me.pnInvoiceDetail.Controls.Add(Me.btnPrintInvoice)
         Me.pnInvoiceDetail.Controls.Add(Me.btnRs)
         Me.pnInvoiceDetail.Controls.Add(Me.gbSearch)
         Me.pnInvoiceDetail.Controls.Add(Me.lblMotorSalesManagement)
@@ -702,18 +742,18 @@ Partial Class Main
         Me.pnInvoiceDetail.TabIndex = 44
         Me.pnInvoiceDetail.Visible = False
         '
-        'btnPrintInvoice
+        'btnOItoXML
         '
-        Me.btnPrintInvoice.BackColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.btnPrintInvoice.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnPrintInvoice.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnPrintInvoice.ForeColor = System.Drawing.Color.Orange
-        Me.btnPrintInvoice.Location = New System.Drawing.Point(19, 504)
-        Me.btnPrintInvoice.Name = "btnPrintInvoice"
-        Me.btnPrintInvoice.Size = New System.Drawing.Size(262, 45)
-        Me.btnPrintInvoice.TabIndex = 28
-        Me.btnPrintInvoice.Text = "XEM CHI TIẾT"
-        Me.btnPrintInvoice.UseVisualStyleBackColor = False
+        Me.btnOItoXML.BackColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.btnOItoXML.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnOItoXML.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnOItoXML.ForeColor = System.Drawing.Color.Black
+        Me.btnOItoXML.Location = New System.Drawing.Point(19, 504)
+        Me.btnOItoXML.Name = "btnOItoXML"
+        Me.btnOItoXML.Size = New System.Drawing.Size(262, 45)
+        Me.btnOItoXML.TabIndex = 29
+        Me.btnOItoXML.Text = "XML"
+        Me.btnOItoXML.UseVisualStyleBackColor = False
         '
         'btnRs
         '
@@ -828,6 +868,16 @@ Partial Class Main
         Me.btnSearchBy.Text = "TÌM KIẾM"
         Me.btnSearchBy.UseVisualStyleBackColor = False
         '
+        'pbSearch
+        '
+        Me.pbSearch.Image = Global.MotorSales.My.Resources.Resources.search
+        Me.pbSearch.Location = New System.Drawing.Point(14, 26)
+        Me.pbSearch.Name = "pbSearch"
+        Me.pbSearch.Size = New System.Drawing.Size(48, 34)
+        Me.pbSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.pbSearch.TabIndex = 27
+        Me.pbSearch.TabStop = False
+        '
         'cbOrderID
         '
         Me.cbOrderID.AutoSize = True
@@ -884,14 +934,14 @@ Partial Class Main
         'DataGridViewOI
         '
         Me.DataGridViewOI.AllowUserToAddRows = False
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridViewOI.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewOI.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.DataGridViewOI.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridViewOI.Location = New System.Drawing.Point(292, 58)
         Me.DataGridViewOI.MultiSelect = False
@@ -941,78 +991,6 @@ Partial Class Main
         Me.Clock.TabIndex = 45
         Me.Clock.TabStop = False
         '
-        'pbSearch
-        '
-        Me.pbSearch.Image = Global.MotorSales.My.Resources.Resources.search
-        Me.pbSearch.Location = New System.Drawing.Point(14, 26)
-        Me.pbSearch.Name = "pbSearch"
-        Me.pbSearch.Size = New System.Drawing.Size(48, 34)
-        Me.pbSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.pbSearch.TabIndex = 27
-        Me.pbSearch.TabStop = False
-        '
-        'btnSearch
-        '
-        Me.btnSearch.BackColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.btnSearch.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnSearch.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSearch.Image = Global.MotorSales.My.Resources.Resources.search
-        Me.btnSearch.Location = New System.Drawing.Point(931, 59)
-        Me.btnSearch.Name = "btnSearch"
-        Me.btnSearch.Size = New System.Drawing.Size(67, 32)
-        Me.btnSearch.TabIndex = 16
-        Me.btnSearch.UseVisualStyleBackColor = False
-        '
-        'tsmiInvoice
-        '
-        Me.tsmiInvoice.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmiCreateInvoice})
-        Me.tsmiInvoice.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tsmiInvoice.Image = Global.MotorSales.My.Resources.Resources.sale
-        Me.tsmiInvoice.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.tsmiInvoice.Name = "tsmiInvoice"
-        Me.tsmiInvoice.Size = New System.Drawing.Size(151, 32)
-        Me.tsmiInvoice.Text = "ĐƠN HÀNG"
-        '
-        'tsmiCreateInvoice
-        '
-        Me.tsmiCreateInvoice.Name = "tsmiCreateInvoice"
-        Me.tsmiCreateInvoice.Size = New System.Drawing.Size(169, 32)
-        Me.tsmiCreateInvoice.Text = "Tạo mới"
-        '
-        'tsmiMotor
-        '
-        Me.tsmiMotor.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmiInventory, Me.XMLToolStripMenuItem})
-        Me.tsmiMotor.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tsmiMotor.Image = Global.MotorSales.My.Resources.Resources.Xe
-        Me.tsmiMotor.Name = "tsmiMotor"
-        Me.tsmiMotor.Size = New System.Drawing.Size(68, 32)
-        Me.tsmiMotor.Text = "XE"
-        '
-        'tsmiInventory
-        '
-        Me.tsmiInventory.Name = "tsmiInventory"
-        Me.tsmiInventory.Size = New System.Drawing.Size(224, 32)
-        Me.tsmiInventory.Text = "Kiểm kê"
-        '
-        'XMLToolStripMenuItem
-        '
-        Me.XMLToolStripMenuItem.Name = "XMLToolStripMenuItem"
-        Me.XMLToolStripMenuItem.Size = New System.Drawing.Size(224, 32)
-        Me.XMLToolStripMenuItem.Text = "XML"
-        '
-        'btnOItoXML
-        '
-        Me.btnOItoXML.BackColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.btnOItoXML.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnOItoXML.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnOItoXML.ForeColor = System.Drawing.Color.Black
-        Me.btnOItoXML.Location = New System.Drawing.Point(19, 558)
-        Me.btnOItoXML.Name = "btnOItoXML"
-        Me.btnOItoXML.Size = New System.Drawing.Size(262, 45)
-        Me.btnOItoXML.TabIndex = 29
-        Me.btnOItoXML.Text = "XML"
-        Me.btnOItoXML.UseVisualStyleBackColor = False
-        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -1040,9 +1018,9 @@ Partial Class Main
         Me.pnInvoiceDetail.PerformLayout()
         Me.gbSearch.ResumeLayout(False)
         Me.gbSearch.PerformLayout()
+        CType(Me.pbSearch, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridViewOI, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Clock, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbSearch, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1121,8 +1099,6 @@ Partial Class Main
     Friend WithEvents lblNum As Label
     Friend WithEvents lblNumText As Label
     Friend WithEvents lstSearchBy As ListBox
-    Friend WithEvents btnPrintInvoice As Button
-    Friend WithEvents tsmiInventory As ToolStripMenuItem
     Friend WithEvents Clock As PictureBox
     Friend WithEvents XMLToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents btnOItoXML As Button

@@ -95,35 +95,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include=".Designer.vb">
-      <DependentUpon>Inventory.vb</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Inventory.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DSInvoice.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DSInvoice.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DSInvoice.vb">
-      <DependentUpon>DSInvoice.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DSMotor.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DSMotor.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DSMotor.vb">
-      <DependentUpon>DSMotor.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Invoice.Designer.vb">
-      <DependentUpon>Invoice.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Invoice.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -157,12 +128,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Inventory.resx">
-      <DependentUpon>Inventory.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Invoice.resx">
-      <DependentUpon>Invoice.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.vb</DependentUpon>
     </EmbeddedResource>
@@ -175,32 +140,8 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="rpInvoice.rdlc" />
-    <EmbeddedResource Include="rpMotor.rdlc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DSInvoice.xsc">
-      <DependentUpon>DSInvoice.xsd</DependentUpon>
-    </None>
-    <None Include="DSInvoice.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DSInvoice.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="DSInvoice.xss">
-      <DependentUpon>DSInvoice.xsd</DependentUpon>
-    </None>
-    <None Include="DSMotor.xsc">
-      <DependentUpon>DSMotor.xsd</DependentUpon>
-    </None>
-    <None Include="DSMotor.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DSMotor.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="DSMotor.xss">
-      <DependentUpon>DSMotor.xsd</DependentUpon>
-    </None>
     <None Include="Motor.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>Motor.designer.vb</LastGenOutput>
